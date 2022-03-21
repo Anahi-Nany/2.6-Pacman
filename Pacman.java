@@ -45,6 +45,7 @@ public class Pacman extends Actor
         Item item = (Item)getOneIntersectingObject(Item.class);
 
         //instanceof operador de java, nos dice si un objeto pertenece a una clase
+
         if(item != null){
             getWorld().removeObject(item);
             score+=item.getScore();

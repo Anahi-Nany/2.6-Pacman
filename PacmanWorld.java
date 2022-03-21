@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.io.File;
+import java.util.Scanner;
 /**
  * Write a description of class MyWorld here.
  * 
@@ -9,13 +10,18 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class PacmanWorld extends World
 {
 
-    private static final int WIDTH_WALL = 28;
-    private static final int HEIGHT_WALL = 28;
+    //private static final int WIDTH_WALL = 28;
+    //private static final int HEIGHT_WALL = 28;
+    
+    private static final int COORDINATE_Y = 40;
+    private static final int COORDINATE_X =28;
+    private static final int INCREASEX = 28;
+    private static final int INCREASEY = 28;
     /**
      * Constructor for objects of class MyWorld.
      * 
      */
-    public PacmanWorld()
+    public PacmanWorld()throws Exception
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
@@ -26,57 +32,78 @@ public class PacmanWorld extends World
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
-    private void prepare()
+    private void prepare() throws Exception
     {
-        Wall wall = new Wall();
+
+        addCharacters();
+    }
+    
+     private void addCharacters() throws Exception{
+        int pacx=0, pacy=0;
+         Wall wall = new Wall();
         int withWall = wall.getImage().getWidth();
-
-        for(int x = 50; x < 550; x+= WIDTH_WALL){
-            wall = new Wall();// cada cubo se crea
-            addObject(wall,x,30);
-            wall = new Wall();
-            addObject(wall,x,350);
-        }
-
-        for(int y = 58; y < 200; y+=HEIGHT_WALL ){
-            wall = new Wall();
-            addObject(wall,50,y);
-            wall = new Wall();
-            addObject(wall,526,y);
-        }
-
-        //puedo hacer esto porq todas las clases estan en el mismo paquete
-
-        
         
         Banana banana = new Banana();
-        addObject(banana,450,104);
+        int withBanana = banana.getImage().getWidth();
+        
         BigBall bigBall = new BigBall();
-        addObject(bigBall,278,175);
-        Cherry cherry = new Cherry();
-        addObject(cherry,178,237);
+        int withBigBall = bigBall.getImage().getWidth();
+        
         SmallBall smallBall = new SmallBall();
-        addObject(smallBall,367,250);
+        int withSmallBall = smallBall.getImage().getWidth();
+        
+        Cherry cherry = new Cherry();
+        int withCherry = cherry.getImage().getWidth();
+        
         Strawberry strawberry = new Strawberry();
-        addObject(strawberry,330,98);
-        Banana banana2 = new Banana();
-        addObject(banana2,471,275);
-        BigBall bigBall2 = new BigBall();
-        addObject(bigBall2,206,313);
-        Cherry cherry2 = new Cherry();
-        addObject(cherry2,72,258);
-        SmallBall smallBall2 = new SmallBall();
-        addObject(smallBall2,466,214);
-        Strawberry strawberry2 = new Strawberry();
-        addObject(strawberry2,286,278);
+        int withStrawberry = strawberry.getImage().getWidth();
         
+        int x,y=COORDINATE_Y;
         
-        
+        String texto;
+        File doc = new File("C:\\Users\\SALUD\\Documents\\Programas\\pacman\\Pacman\\doc\\PacmanLevel1.txt");
+        Scanner obj = new Scanner(doc);
+
+        while (obj.hasNextLine()) {
+            x=COORDINATE_X;
+            y+= INCREASEY;
+            texto = obj.nextLine();
+            for (char c : texto.toCharArray()) {
+                x+=INCREASEX;
+                //System.out.println("LINEA 1" + obj.nextLine());
+                switch (c) {
+                    case 'X':
+                        wall = new Wall();
+                        addObject(wall,x,y);
+                        break;
+                    case 'b':
+                        smallBall = new SmallBall();
+                        addObject(smallBall,x,y);
+                        break;
+                    case 'B':
+                        bigBall = new BigBall();
+                        addObject(bigBall,x,y);
+                        break;
+                    case 'C':
+                        cherry = new Cherry();
+                        addObject(cherry,x,y);
+                        break;
+                    case 'S':
+                        strawberry = new Strawberry();
+                        addObject(strawberry,x,y);
+                        break;
+                    case 'P':
+                        pacx=x;
+                        pacy=y;
+                        break;
+                    //default: x+=increasex/4;
+                }
+            }
+        }
         PacmanHud hud = new PacmanHud();
         addObject(hud,0,0);
         
         Pacman pacman = new Pacman(hud);
-        addObject(pacman,110,95);
-        
-    }
+        addObject(pacman,pacx,pacy);
+}
 }

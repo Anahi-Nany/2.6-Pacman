@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Pacman
+comment1.params=pacmanHud
+comment1.target=Pacman(PacmanHud)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ checkColissions()
+comment4.params=
+comment4.target=void\ movePacman()
+comment5.params=
+comment5.target=void\ handleDirection()
+comment6.params=
+comment6.target=Wall\ getWallOnTheWay()
+comment7.params=
+comment7.target=void\ openClouseMouth()
+numComments=8
